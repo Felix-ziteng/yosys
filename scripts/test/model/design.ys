@@ -1,0 +1,8 @@
+# running in test/src/
+# 这里调用上面的 Yosys 脚本
+tcl test.tcl
+
+hierarchy -smtcheck
+rename -witness
+write_jny -no-connections ../model/design.json
+write_rtlil ../model/design.il

@@ -5,7 +5,7 @@
 #include "kernel/yosys.h"
 #include "kernel/sigtools.h"
 #include "kernel/celltypes.h"
-#include "backends/ilang/ilang_backend.h"
+#include "/usr/share/yosys/include/backends/ilang/ilang_backend.h"
 #include "kernel/hashlib.h"
 
 #include <string>

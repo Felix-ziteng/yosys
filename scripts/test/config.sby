@@ -1,0 +1,35 @@
+[options]
+mode bmc  # 可以使用 bmc, prove, cover, k-induction 等模式
+depth 20  # 指定 bmc 模式的最大深度
+
+[engines]
+smtbmc z3
+
+[script]
+# 这里调用上面的 Yosys 脚本
+tcl test.tcl
+
+[files]
+# 列出所有相关的 Verilog 文件
+/home/felix/Documents/rtl2uspec/multicore_vscale_rtl2uspec_ae/src/main/verilog/vscale_sim_top_unmod.v
+/home/felix/Documents/rtl2uspec/multicore_vscale_rtl2uspec_ae/src/main/verilog/vscale_alu.v
+/home/felix/Documents/rtl2uspec/multicore_vscale_rtl2uspec_ae/src/main/verilog/vscale_ctrl.v
+/home/felix/Documents/rtl2uspec/multicore_vscale_rtl2uspec_ae/src/main/verilog/vscale_mul_div.v
+/home/felix/Documents/rtl2uspec/multicore_vscale_rtl2uspec_ae/src/main/verilog/vscale_regfile.v
+/home/felix/Documents/rtl2uspec/multicore_vscale_rtl2uspec_ae/src/main/verilog/vscale_core.v
+/home/felix/Documents/rtl2uspec/multicore_vscale_rtl2uspec_ae/src/main/verilog/vscale_hasti_bridge.v
+/home/felix/Documents/rtl2uspec/multicore_vscale_rtl2uspec_ae/src/main/verilog/vscale_PC_mux.v
+/home/felix/Documents/rtl2uspec/multicore_vscale_rtl2uspec_ae/src/main/verilog/vscale_src_a_mux.v
+/home/felix/Documents/rtl2uspec/multicore_vscale_rtl2uspec_ae/src/main/verilog/vscale_csr_file.v
+/home/felix/Documents/rtl2uspec/multicore_vscale_rtl2uspec_ae/src/main/verilog/vscale_imm_gen.v
+/home/felix/Documents/rtl2uspec/multicore_vscale_rtl2uspec_ae/src/main/verilog/vscale_pipeline.v
+/home/felix/Documents/rtl2uspec/multicore_vscale_rtl2uspec_ae/src/main/verilog/vscale_src_b_mux.v
+/home/felix/Documents/rtl2uspec/multicore_vscale_rtl2uspec_ae/src/main/verilog/vscale_arbiter.v
+/home/felix/Documents/rtl2uspec/multicore_vscale_rtl2uspec_ae/src/main/verilog/vscale_multicore_constants.vh
+/home/felix/Documents/rtl2uspec/multicore_vscale_rtl2uspec_ae/src/main/verilog/vscale_dp_hasti_sram.v
+/home/felix/Documents/rtl2uspec/multicore_vscale_rtl2uspec_ae/src/main/verilog/vscale_ctrl_constants.vh
+/home/felix/Documents/rtl2uspec/multicore_vscale_rtl2uspec_ae/src/main/verilog/rv32_opcodes.vh
+/home/felix/Documents/rtl2uspec/multicore_vscale_rtl2uspec_ae/src/main/verilog/vscale_alu_ops.vh
+/home/felix/Documents/rtl2uspec/multicore_vscale_rtl2uspec_ae/src/main/verilog/vscale_md_constants.vh
+/home/felix/Documents/rtl2uspec/multicore_vscale_rtl2uspec_ae/src/main/verilog/vscale_hasti_constants.vh
+/home/felix/Documents/rtl2uspec/multicore_vscale_rtl2uspec_ae/src/main/verilog/vscale_csr_addr_map.vh

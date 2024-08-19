@@ -911,7 +911,7 @@ bool dump_cell_expr(std::ostream &f, std::string indent, RTLIL::Cell *cell)
 		FfData ff(nullptr, cell);
 
 		// $ff / $_FF_ cell: not supported.
-		if (ff.has_d && !ff.has_clk && !ff.has_en)
+		if (ff.has_gclk)
 			return false;
 
 		std::string reg_name = cellname(cell);
@@ -937,11 +937,11 @@ bool dump_cell_expr(std::ostream &f, std::string indent, RTLIL::Cell *cell)
 			std::string reg_bit_name;
 			if (chunky) {
 				reg_bit_name = stringf("%s[%d]", reg_name.c_str(), i);
-				if (ff.has_d)
+				if (ff.has_gclk || ff.has_clk)
 					sig_d = ff.sig_d[i];
 			} else {
 				reg_bit_name = reg_name;
-				if (ff.has_d)
+				
 					sig_d = ff.sig_d;
 			}
 			if (ff.has_arst)
@@ -984,9 +984,9 @@ bool dump_cell_expr(std::ostream &f, std::string indent, RTLIL::Cell *cell)
 					f << stringf("%s" "  else ", indent.c_str());
 				}
 
-				if (ff.has_srst && ff.has_en && ff.ce_over_srst) {
-					f << stringf("if (%s", ff.pol_en ? "" : "!");
-					dump_sigspec(f, ff.sig_en);
+				if (ff.has_srst && ff.has_ce && ff.ce_over_srst) {
+					f << stringf("if (%s", ff.pol_ce ? "" : "!");
+					dump_sigspec(f, ff.sig_ce);
 					f << stringf(")\n");
 					f << stringf("%s" "    if (%s", indent.c_str(), ff.pol_srst ? "" : "!");
 					dump_sigspec(f, ff.sig_srst);
@@ -1003,9 +1003,9 @@ bool dump_cell_expr(std::ostream &f, std::string indent, RTLIL::Cell *cell)
 						f << stringf(";\n");
 						f << stringf("%s" "  else ", indent.c_str());
 					}
-					if (ff.has_en) {
-						f << stringf("if (%s", ff.pol_en ? "" : "!");
-						dump_sigspec(f, ff.sig_en);
+					if (ff.has_ce) {
+						f << stringf("if (%s", ff.pol_ce ? "" : "!");
+						dump_sigspec(f, ff.sig_ce);
 						f << stringf(") ");
 					}
 				}
@@ -1027,7 +1027,7 @@ bool dump_cell_expr(std::ostream &f, std::string indent, RTLIL::Cell *cell)
 					f << stringf("%s" "  else if (%s", indent.c_str(), ff.pol_set ? "" : "!");
 					dump_sigspec(f, ff.sig_set[i]);
 					f << stringf(") %s = 1'b1;\n", reg_bit_name.c_str());
-					if (ff.has_d)
+					if (ff.has_aload)
 						f << stringf("%s" "  else ", indent.c_str());
 				} else if (ff.has_arst) {
 					f << stringf("if (%s", ff.pol_arst ? "" : "!");
@@ -1035,12 +1035,12 @@ bool dump_cell_expr(std::ostream &f, std::string indent, RTLIL::Cell *cell)
 					f << stringf(") %s = ", reg_bit_name.c_str());
 					dump_sigspec(f, val_arst);
 					f << stringf(";\n");
-					if (ff.has_d)
+					if (ff.has_aload)
 						f << stringf("%s" "  else ", indent.c_str());
 				}
-				if (ff.has_d) {
-					f << stringf("if (%s", ff.pol_en ? "" : "!");
-					dump_sigspec(f, ff.sig_en);
+				if (ff.has_aload) {
+					f << stringf("if (%s", ff.pol_aload ? "" : "!");
+					dump_sigspec(f, ff.sig_aload);
 					f << stringf(") %s = ", reg_bit_name.c_str());
 					dump_sigspec(f, sig_d);
 					f << stringf(";\n");

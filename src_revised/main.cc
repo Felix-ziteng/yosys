@@ -1,7 +1,6 @@
 #include "kernel/yosys.h"
 #include "kernel/sigtools.h"
 #include "kernel/celltypes.h"
-#include "backends/ilang/ilang_backend.h"
 #include "kernel/hashlib.h"
 
 #include <string>
@@ -274,14 +273,13 @@ void selective_flatten_preproc(RTLIL::Design *design, RTLIL::Module *module_, st
         }
     }
     
-    Pass::call(design, "memory -nomap -nordff");
-    Pass::call(design, "flatten");
-    Pass::call(design, "stat");
-    Pass::call(design, "ff_stat");
-    Pass::call(design, "hierarchy -check -top " + module_->name.str().substr(1)); //TBC
-    Pass::call(design, "dump -o ./build/dump/rtlil.txt"); //TBC
-    
-    
+Pass::call(design, "memory -nomap -nordff");
+Pass::call(design, "flatten");
+Pass::call(design, "stat");
+Pass::call(design, "ff_stat");
+Pass::call(design, "hierarchy -check -top " + module_->name.str().substr(1)); // TBC
+Pass::call(design, "dump -o ./build/dump/rtlil.txt"); // TBC
+
 }
 
 PRIVATE_NAMESPACE_END

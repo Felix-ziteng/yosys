@@ -45,6 +45,7 @@ std::string mem_prefix = "hasti_mem"; //memory module instantiated name
 dict<std::string, struct core_mem_req_> mem_core_req = {
 	{
 		"hasti_mem.mem", {
+			.pc_ = "core_gen_block[0].vscale.pipeline.PC_DX",
 			.trans_rw=make_pair("dmem_hwrite", "1"), 
 			.trans_valid=make_pair("dmem_htrans", "`HASTI_TRANS_NONSEQ"),
 			.trans_siz=make_pair("dmem_hsize", "`HASTI_SIZE_WORD"),
@@ -52,7 +53,7 @@ dict<std::string, struct core_mem_req_> mem_core_req = {
 			.wdata = "dmem_hwdata",
 			.raddr = "dmem_haddr",
 			.rdata = "dmem_hrdata",
-            .pc_ = "core_gen_block[0].vscale.pipeline.PC_DX",
+            
 		}
 	}
 }; // key is mem module 
@@ -74,15 +75,17 @@ dict<std::string, struct mem_rec_req_> mem_rec_req = {
 dict<std::string, struct mem_proc_req_> mem_proc_reqs = {
 	{
 		"hasti_mem.mem", {
-			.array_name="mem",
+			
 			.trans_siz=make_pair("p0_wmask", "32'hffffffff"),
 			.trans_w={"p0_state == 1 ", "p0_wvalid == 1"},
 			.waddr=make_pair("p0_word_waddr[2+`HASTI_ADDR_WIDTH-1:1+`HASTI_ADDR_WIDTH-1]", "p0_word_waddr[`HASTI_ADDR_WIDTH-1:0]"),
-			.raddr=make_pair("p0_reg_raddr[2+`HASTI_ADDR_WIDTH-1:1+`HASTI_ADDR_WIDTH-1]", "p0_reg_raddr[`HASTI_ADDR_WIDTH-1:0]"),
 			.waddr_offset=2,
+			.raddr=make_pair("p0_reg_raddr[2+`HASTI_ADDR_WIDTH-1:1+`HASTI_ADDR_WIDTH-1]", "p0_reg_raddr[`HASTI_ADDR_WIDTH-1:0]"),
+			
 			.raddr_offset=2,//0,
 			.trans_r_transparent=make_pair(true, 1), // previous cycle should get the read request as it is rdtransparent 	
 			.rdata = "p0_hrdata",
+			.array_name="mem",
 		// 	.waddr = "dmem_haddr",
 		// 	.wdata = "dmem_hwdata",
 		// 	.raddr = "dmem_haddr",
